@@ -432,7 +432,8 @@ function openMat(bid,mid){
   curMat=mid;
   document.getElementById('mTitle').textContent=cleanTitle(m.title);
   document.getElementById('mBody').textContent=m.body;
-  document.getElementById('mLink').href=m.link||'#';
+  var ml=document.getElementById('mLink');
+  if(m.link){ml.href=m.link;ml.style.display='inline-block';}else{ml.style.display='none';}
   document.getElementById('mFb').value=(mats[mid]&&mats[mid].feedback)||'';
   showModal('modal');
   if(!mats[mid]||!mats[mid].read){mats[mid]=mats[mid]||{};mats[mid].read=true;saveMats();render();}
