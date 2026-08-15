@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="织网">
+<meta name="theme-color" content="#1e3a2f">
+<link rel="apple-touch-icon" href="icon.png">
+<title>织网</title>
+<style>
+:root{--green:#1e3a2f;--green2:#2c5944;--gold:#c2a24b;--gold2:#d9bc6a;--cream:#f0ebdf;--card:#fffdf6;--ink:#2a332e;--muted:#8b918c;--line:#e6dfcd}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f0ebdf;color:#2a332e;max-width:520px;margin:0 auto;min-height:100vh;padding-bottom:98px}
+.serif{font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.titlebar{background:#1e3a2f;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(217,188,106,.25)}
+.titlebar .t{font-size:17px;font-weight:600;letter-spacing:2px}
+.titlebar .rev{background:linear-gradient(135deg,#c2a24b,#d9bc6a);border:none;color:#1e3a2f;font-weight:600;border-radius:999px;padding:6px 14px;font-size:12px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+main{padding:14px 14px 20px}
+.hero{background:linear-gradient(155deg,#123527,#24503f);color:#fff;border-radius:0 0 22px 22px;padding:20px 20px 22px;margin:-14px -14px 14px;position:relative;overflow:hidden;box-shadow:0 10px 24px rgba(18,53,39,.25)}
+.hero::after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,75,.30),transparent 70%)}
+
+.hero .hrow{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.hero .hbrand{display:flex;align-items:center;gap:11px}
+.hero .avatar{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#e6cf8a,#b8923f);border:2px solid rgba(255,255,255,.35);color:#123527;font-family:"Songti SC","STSong",serif;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.25);flex-shrink:0}
+.hero .bname{font-size:17px;font-weight:600}
+.hero .ben{font-size:10px;letter-spacing:1.5px;opacity:.75;margin-top:2px}
+.hero .hbadge{font-size:11px;background:rgba(255,255,255,.08);border:1px solid rgba(217,188,106,.6);color:#e6cf8a;border-radius:999px;padding:6px 12px;cursor:pointer}
+.hero .gsen{font-size:10px;color:#d9bc6a;letter-spacing:3px;margin-top:18px;position:relative;z-index:1}
+.hero h2{font-size:26px;font-weight:600;margin:6px 0 6px;position:relative;z-index:1}
+.hero .sub{font-size:12px;color:#d7e3da;line-height:1.6;position:relative;z-index:1}
+.hero .progrow{display:flex;justify-content:space-between;font-size:12px;opacity:.95;margin-top:16px;position:relative;z-index:1}
+.hero .prog{background:#e8dfc8;border-radius:999px;height:10px;overflow:hidden;margin-top:8px;position:relative;z-index:1;box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}
+.hero .prog i{display:block;height:100%;background:linear-gradient(90deg,#c2a24b,#e6cf8a);border-radius:999px;transition:width .3s;box-shadow:0 0 8px rgba(217,188,106,.55)}
+.hero .hstats{margin-top:14px;display:flex;align-items:baseline;gap:0;position:relative;z-index:1}
+.hero .hstats b{font-size:20px;color:#e6cf8a;font-weight:600;font-family:Georgia,"Songti SC",serif;margin-right:6px}
+.hero .hstats span{font-size:11px;opacity:.9;margin-right:16px}
+.hero .hstats .sep{width:1px;height:14px;background:rgba(255,255,255,.28);align-self:center;font-size:0;margin-right:16px}
+.mstats{display:flex;margin-top:16px;border-top:1px solid rgba(255,255,255,.14);padding-top:13px;position:relative;z-index:1}
+.mstat{flex:1;text-align:center}
+.mstat+.mstat{border-left:1px solid rgba(255,255,255,.22)}
+.mstat b{display:block;font-family:Georgia,"Times New Roman","Songti SC",serif;font-size:18px;color:#e6cf8a;font-weight:600;line-height:1.25}
+.mstat span{font-size:10px;color:rgba(255,255,255,.72);letter-spacing:1px}
+.hero .hfoot{display:flex;align-items:center;gap:10px;margin-top:18px;position:relative;z-index:1}
+.hero .cta{flex:1;background:linear-gradient(135deg,#c2a24b,#d9bc6a);color:#1e3a2f;border:none;border-radius:999px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.22)}
+.hero .hfoot .mini{font-size:11px;opacity:.8}
+.hero .outline{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.65);color:#fff;border-radius:999px;padding:8px 16px;font-size:12px;cursor:pointer}
+.card{background:#fffdf6;border:1px solid #e3dac0;border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:0 3px 10px rgba(60,50,20,.06)}
+.chh{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.chh .dot{width:8px;height:8px;background:#c2a24b;transform:rotate(45deg);border-radius:1px;flex-shrink:0}
+.chh .tt{font-size:15px;font-weight:600;color:#1e3a2f}
+.chh .en{margin-left:auto;font-size:9px;letter-spacing:2px;color:#8a6d22;font-weight:600}
+.search{display:flex;align-items:center;gap:8px;background:#fffdf6;border:1px solid #e3dac0;border-radius:14px;padding:12px 14px;box-shadow:0 3px 10px rgba(60,50,20,.06);margin-bottom:12px}
+.search .sico{display:flex;align-items:center}
+.search input{flex:1;border:none;background:none;font-size:14px;outline:none;color:#2a332e}
+.hint{font-size:11px;color:#6f766f;margin-top:8px;letter-spacing:.3px}
+.fgroup{border-bottom:1px solid #ece4cf;padding:10px 0}
+.fgroup:last-child{border-bottom:none;padding-bottom:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chips .lb{font-size:12px;color:#5f665f;width:100%;margin-bottom:2px;font-weight:600}
+.chip{font-size:12px;padding:6px 13px;border-radius:999px;background:#faf6ea;border:1px solid #e0d7bf;color:#4a514b;cursor:pointer}
+.chip.on{background:#1e3a2f;border-color:#1e3a2f;color:#fff}
+.sortrow{display:flex;align-items:center;gap:8px;padding-top:10px}
+.sortrow span{font-size:12px;color:#8b918c}
+.sortrow b{font-size:12px;color:#1e3a2f;font-weight:600}
+.reshead{display:flex;justify-content:space-between;align-items:baseline;margin:16px 2px 8px}
+.reshead h3{font-size:16px;color:#1e3a2f;font-weight:600}
+.reshead .gold{font-size:11px;color:#8a6d22;background:#f3ecd8;border:1px solid #e6dcc0;border-radius:999px;padding:3px 10px;font-weight:600;letter-spacing:.5px}
+.dayhead{display:flex;justify-content:space-between;align-items:baseline;margin:14px 2px 8px}
+.dayhead h3{font-size:17px;color:#1e3a2f;font-weight:600}
+.dayhead .ds{font-size:12px;color:#8b918c}
+.dayhead .ds b{color:#8a6d22;font-weight:600}
+.rescount{font-size:11px;color:#6f766f;margin-bottom:10px;padding:0 2px}
+.rescount b{color:#8a6d22;font-weight:600}
+.resbtns{display:flex;align-items:center;gap:16px;margin-bottom:12px;padding:0 2px}
+.resbtns .g{background:#1e3a2f;color:#fff;border:none;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 2px 6px rgba(30,58,47,.25)}
+.resbtns .t{background:#fdf9ec;border:1px solid #c2a24b;color:#8a6d22;font-size:13px;font-weight:600;border-radius:999px;padding:10px 18px;cursor:pointer}
+.bhead{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:600;color:#1e3a2f;margin-bottom:2px}
+.bhead .dot{width:8px;height:8px;background:#c2a24b;transform:rotate(45deg);border-radius:1px}
+.btag{font-size:12px;color:#6b726d;margin-bottom:8px;padding-left:16px}
+.task{display:flex;align-items:center;gap:11px;padding:13px 4px;border-bottom:1px solid #efe9da;cursor:pointer;transition:background .15s}
+.task:active{background:#faf6ea}
+.task:last-child{border-bottom:none}
+.task .ck{width:27px;height:27px;border-radius:50%;border:2px solid #c2a24b;background:rgba(201,162,75,.08);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;transition:all .15s;box-shadow:inset 0 0 0 2px #fff;align-self:flex-start;margin-top:2px;margin-right:11px}
+.task:active .ck{transform:scale(.92)}
+.task.done .ck{background:#1e3a2f;border-color:#1e3a2f;box-shadow:none}
+.task .tx{flex:1;font-size:13px;line-height:1.5}
+.task.done .tx{color:#8b918c;text-decoration:line-through}
+.task .badge{font-size:11px;background:#fdf9ec;border:1px solid #d9bc6a;color:#8a6d22;border-radius:999px;padding:3px 10px;flex-shrink:0;font-weight:600}
+.mini{display:flex;align-items:center;gap:9px;padding:9px 4px;border-bottom:1px solid #f0ead9}
+.mini:last-child{border-bottom:none}
+.mini .d2{width:6px;height:6px;border-radius:50%;background:#c2a24b;flex-shrink:0}
+.mini .mtag{font-size:10px;color:#1e3a2f;background:#e9f0e9;border:1px solid #d4e0d4;border-radius:999px;padding:2px 8px;flex-shrink:0;font-weight:600}
+.mini .tx{flex:1;font-size:12px;color:#2a332e;line-height:1.5}
+.prow{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#8b918c;margin-top:10px}
+.prow b{font-size:15px;color:#1e3a2f;font-family:Georgia,serif}
+.pbar{background:#d9cfb4;border-radius:999px;height:7px;overflow:hidden;margin:6px 0 12px}
+.pbar i{display:block;height:100%;background:linear-gradient(90deg,#c2a24b,#d9bc6a);border-radius:999px;transition:width .3s}
+.fb{padding:10px 12px 10px 14px;border-left:2px solid #c2a24b;background:#faf6ea;border-radius:0 10px 10px 0;margin-bottom:8px}
+.fb:last-child{margin-bottom:0}
+.fbq{font-size:13px;color:#2a332e;line-height:1.6}
+.fbt{font-size:10px;color:#4a514b;margin-top:4px}
+.listrow{display:flex;align-items:center;gap:10px;padding:12px 4px;border-bottom:1px solid #efe9da;cursor:pointer}
+.listrow:last-child{border-bottom:none}
+.listrow:active{background:#faf6ea}
+.lr-t{flex:1;min-width:0;font-size:13px;color:#2a332e;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lr-s{font-size:10px;padding:3px 10px;border-radius:999px;flex-shrink:0;font-weight:600;letter-spacing:.5px}
+.st-unread{color:#5f665f;background:#f4efe4;border:1px solid #e0d7bf}
+.st-read{color:#fff;background:#1e3a2f}
+.st-fb{color:#7a5f16;background:#ead9ab}
+.mats{margin-top:6px;border-top:1px solid #ece4cf;padding-top:4px}
+.mats .mt{display:flex;align-items:center;gap:8px;padding:10px 4px;cursor:pointer;border-radius:8px}
+.mats .mt:active{background:#faf6ea}
+.mats .mt .tt{flex:1;font-size:13px;color:#2a332e}
+.mats .mt .st{font-size:10px;color:#c2a24b;letter-spacing:.5px}
+.empty2{text-align:center;color:#8b918c;font-size:12px;line-height:1.8;padding:18px 8px}
+.empty2 .eico{width:46px;height:46px;border-radius:50%;background:#f3ecd8;border:1px solid #e3dac0;margin:0 auto 10px;display:flex;align-items:center;justify-content:center}
+.empty2 .eact{margin-top:10px;background:#1e3a2f;color:#fff;border:none;border-radius:999px;padding:8px 18px;font-size:12px;cursor:pointer}
+.tabbar{position:fixed;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;background:#fdfaf1;border-top:1px solid #e3dac0;box-shadow:0 -4px 16px rgba(60,50,20,.08);display:flex;z-index:9;padding:8px 0 calc(10px + env(safe-area-inset-bottom))}
+.tabbar button{flex:1;border:none;background:none;font-size:11px;letter-spacing:2px;color:#6f6a5e;cursor:pointer;padding:4px 0;position:relative;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tabbar button svg{display:block}
+.tabbar button.on{color:#1e3a2f;font-weight:700}
+.tabbar button.on svg{stroke:#c2a24b;stroke-width:2.4}
+.mask{display:none;position:fixed;inset:0;background:rgba(20,35,28,.55);z-index:10}
+.modal{display:none;position:fixed;left:0;right:0;bottom:0;background:#fffdf6;border-radius:18px 18px 0 0;padding:22px 20px 32px;z-index:11;max-width:520px;margin:0 auto;max-height:88vh;overflow:auto}
+.modal h3{font-size:18px;font-weight:600;margin-bottom:10px;padding-right:28px;color:#1e3a2f}
+.modal .close{position:absolute;top:12px;right:14px;font-size:22px;color:#8b918c;background:none;border:none;cursor:pointer}
+.modal .body{font-size:14px;line-height:1.9;color:#2a332e;white-space:pre-wrap;margin:8px 0 12px}
+.modal .link{display:inline-block;color:#c2a24b;font-size:13px;text-decoration:underline;margin-bottom:12px}
+.modal label{font-size:12px;color:#8b918c;display:block;margin-bottom:6px}
+.modal textarea{width:100%;min-height:66px;border:1px solid #e6dfcd;border-radius:10px;padding:10px;font-size:14px;font-family:inherit;background:#f6f1e5}
+.modal .save{margin-top:12px;width:100%;padding:12px;border:none;border-radius:12px;background:#1e3a2f;color:#fff;font-size:15px;font-weight:500;cursor:pointer}
+.modal .row{font-size:13px;color:#2a332e;line-height:2}
+.modal .row b{color:#1e3a2f}
+.foot{text-align:center;font-size:10px;color:#8b918c;padding:10px;letter-spacing:.5px}
+.empty{text-align:center;color:#8b918c;font-size:13px;padding:18px 8px}
+
+.go{color:#c2a24b;font-size:14px;font-weight:600;flex-shrink:0;margin-left:6px;padding-right:2px}
+.dhb{font-size:11px;color:#8a6d22;background:#fffdf6;border:1px solid #d9bc6a;border-radius:999px;padding:3px 10px;font-weight:600}
+.dhb-ok{background:#e9f0e9;border-color:#2c5944;color:#1e3a2f}
+.tom{background:#faf6ea;border:1px dashed #e3dac0;border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.hero .progrow b{font-family:Georgia,"Songti SC",serif;color:#e6cf8a;font-size:14px}
+.task.back .ck{border-style:dashed;background:rgba(201,162,75,.05)}
+.task.back .tx{color:#8b918c}
+.task.back .badge{opacity:.85}
+.msgbox{width:100%;min-height:84px;border:1px solid #e3dac0;border-radius:12px;padding:10px 12px;font-size:14px;font-family:inherit;background:#fdf9ec;color:#2a332e;margin-bottom:10px}
+.msg{padding:10px 4px;border-bottom:1px solid #efe9da}
+.msg:last-child{border-bottom:none}
+.msg .mt{font-size:10px;color:#8b918c;letter-spacing:.5px}
+.msg .mx{font-size:13px;line-height:1.6;margin:4px 0 8px;color:#2a332e}
+.msg .mb{display:flex;gap:10px}
+.msg .mb button{background:#fdf9ec;border:1px solid #e0d7bf;color:#8a6d22;border-radius:999px;padding:3px 12px;font-size:10px;cursor:pointer}
+.msg .mb button.del{background:none;border-color:#e6dfcd;color:#a89d84}
+.card.focus{box-shadow:0 0 0 1.5px #c2a24b,0 6px 16px rgba(60,50,20,.08)}
+.card .btn{width:100%;padding:12px;border:none;border-radius:12px;background:linear-gradient(135deg,#1e3a2f,#2c5944);color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.ghost{background:none;border:none;color:#a89d84;font-size:12px;cursor:pointer;text-decoration:underline}
+.msgbox::placeholder{color:#b0a88f}
+.msgbox:-ms-input-placeholder{color:#b0a88f}
+</style></head>
+<body>
+<div class="titlebar">
+  <div class="t" id="tbTitle">你好，Wade</div>
+  <button class="rev" id="tbBtn" onclick="openReview()">今日反馈</button>
+</div>
+<main id="main"></main>
+<div class="foot">数据存本机 · 无登录 · 无广告 · 织网 v8.3 每日计划版</div>
+<div class="tabbar">
+  <button id="tbHome" class="on" onclick="switchTab('home')"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.0"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/></svg>首页</button>
+  <button id="tbCheck" onclick="switchTab('check')"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.0"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>打卡</button>
+  <button id="tbTalk" onclick="switchTab('talk')"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.0"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.2 0-2.4-.2-3.4-.7L3 21l1.8-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg>AI管家</button>
+  <button id="tbMine" onclick="switchTab('mine')"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.0"><circle cx="12" cy="8" r="4"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5"/></svg>我的</button>
+</div>
+<div class="mask" id="mask" onclick="closeModal()"></div>
+<div class="modal" id="modal">
+  <button class="close" onclick="closeModal()">✕</button>
+  <h3 id="mTitle"></h3>
+  <div class="body" id="mBody"></div>
+  <a class="link" id="mLink" href="#" target="_blank" rel="noopener">查看原文链接</a>
+  <label>你的反馈（写给AI管家，帮助改进明天的计划）</label>
+  <textarea id="mFb" placeholder="读完想到啥、哪里没看懂，写一句就行"></textarea>
+  <button class="save" onclick="saveFb()">保存反馈</button>
+</div>
+<div class="modal" id="revModal">
+  <button class="close" onclick="closeModal()">✕</button>
+  <h3>今日小结</h3>
+  <div id="revBody"></div>
+  <button class="save" onclick="copyFeedback()">复制反馈发给AI管家</button>
+</div>
+<div class="modal" id="setModal">
+  <button class="close" onclick="closeModal()">✕</button>
+  <h3>关于织网</h3>
+  <div class="row">
+    <b>织网 · 每日学习教练</b><br>
+    每天一份当日计划＋当天内容，做完打勾、写反馈。<br><br>
+    数据存本机 · 不上传不联网<br>
+    无登录 · 无广告 · 无收费<br>
+    每日计划由管家更新，每晚生成第二天<br>
+    想改计划？去「AI管家」页写留言发给管家即可<br><br>
+    版本 v8.3 · 每日计划版
+  </div>
+  <button class="save" onclick="copyFeedback()">复制反馈发给AI管家</button>
+</div>
+<script>
+var DEFAULT={"updatedAt":"2026-08-15 22:45","plans":[
+{"date":"2026-08-14","blocks":[
+{"id":"read","name":"看书","emoji":"📚","tasks":[{"id":"read-20260814-1","text":"读书30分钟：《专业投机原理》第1章（先保本）"}],"materials":[{"id":"read-20260814-m1","title":"《专业投机原理》第1章·投机者的三条原则","body":"第一章讲交易员的三条原则，按重要性排：\n1. 先保本（保障资本）：本金亏没了就出局，活着永远是第一位。\n2. 一致地赚钱（一致性的获利能力）：靠一套能重复的方法稳定小赚。\n3. 追求卓越的回报：前两条站稳了再追高收益。\n\n——管家每晚更新这份资料","link":"https://book.douban.com/subject/1018799/"}]},
+{"id":"chain","name":"产业链","emoji":"🔧","tasks":[{"id":"chain-20260814-1","text":"学1篇产业链资料：AI算力"}],"materials":[{"id":"chain-20260814-m1","title":"产业链入门：怎么看懂一条产业链","body":"看懂一条产业链，用大白话框架：\n下游谁在用 → 中游谁在做 → 上游谁供材料设备。\n\n以AI算力为例：\n- 下游：云厂商、AI公司（它们要买算力）\n- 中游：服务器、芯片厂商（英伟达、华为等）\n- 上游：材料和设备（光刻机、存储、封测）\n\n——管家每晚更新这份资料","link":"https://example.com/chain-intro"}]},
+{"id":"news","name":"科技新闻","emoji":"📰","tasks":[{"id":"news-20260814-1","text":"看1条科技新闻，写一句感想"}],"materials":[{"id":"news-20260814-m1","title":"科技新闻速览","body":"这里放管家整理的今日科技新闻摘要。\n你可以把想让我整理的新闻链接丢给我，我汇总到这里。\n\n——管家每晚更新这份资料","link":"https://example.com/news"}]}
+]},{"date":"2026-08-15","blocks":[
+{"id":"read","name":"看书","emoji":"📚","tasks":[{"id":"read-20260815-1","text":"读书30分钟：《专业投机原理》第2章"}],"materials":[{"id":"read-20260815-m1","title":"《专业投机原理》第2章·要点","body":"第2章要点这里放。\n\n——管家每晚更新这份资料","link":"https://book.douban.com/subject/1018799/"}]},
+{"id":"chain","name":"产业链","emoji":"🔧","tasks":[{"id":"chain-20260815-1","text":"学1篇产业链资料：半导体设备"}],"materials":[{"id":"chain-20260815-m1","title":"半导体设备入门","body":"半导体设备这块，管家会按产业链框架整理：\n谁在用、谁在做、上游材料设备是什么。\n\n——管家每晚更新这份资料","link":"https://example.com/chain"}]},
+{"id":"news","name":"科技新闻","emoji":"📰","tasks":[{"id":"news-20260815-1","text":"看1条科技新闻，写一句感想"}],"materials":[{"id":"news-20260815-m1","title":"今日科技新闻","body":"这里放今天的科技新闻摘要。\n\n——管家每晚更新这份资料","link":"https://example.com/news"}]}
+]},
+{"date":"2026-08-16","blocks":[
+{"id":"read","name":"看书","emoji":"📚","tasks":[{"id":"read-20260816-1","text":"读书30分钟：复习《小岛经济学》印钱那段"}],"materials":[{"id":"read-20260816-m1","title":"《小岛经济学》印钱那段","body":"把印钱那段的大白话要点放这里。\n\n——管家每晚更新这份资料","link":"https://example.com/xiaodao"}]},
+{"id":"chain","name":"产业链","emoji":"🔧","tasks":[{"id":"chain-20260816-1","text":"自己画一张AI算力产业链草图"}],"materials":[{"id":"chain-20260816-m1","title":"画产业链草图的小提示","body":"怎么画：下游→中游→上游，先写三个框再连线。\n\n——管家每晚更新这份资料","link":"https://example.com/chain"}]},
+{"id":"news","name":"科技新闻","emoji":"📰","tasks":[{"id":"news-20260816-1","text":"看1条科技新闻，写一句感想"}],"materials":[{"id":"news-20260816-m1","title":"明日科技新闻","body":"明早前管家会更新这里的新闻。\n\n——管家每晚更新这份资料","link":"https://example.com/news"}]}
+]}
+],"reply":{"date":"2026-08-16","text":"你好 Wade，我是你的 AI 管家。把需求写在下方，点「存进留言」保存，再点「复制发给AI管家」发给我，我会更新你的每日计划，并把回复贴回这里。"}};
+var DATA=DEFAULT;
+var CK='wang_checks',MT='wang_mats';
+var checks={};try{checks=JSON.parse(localStorage.getItem(CK)||'{}');}catch(e){}
+var mats={};try{mats=JSON.parse(localStorage.getItem(MT)||'{}');}catch(e){}
+var curMat=null;
+var tab='home',q='',fBlock='全部',fStatus='全部';
+function saveChecks(){localStorage.setItem(CK,JSON.stringify(checks));}
+function saveMats(){localStorage.setItem(MT,JSON.stringify(mats));}
+function pad(n){return (n<10?'0':'')+n;}
+function ymd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function todayStr(){return ymd(new Date());}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function cleanTitle(s){return String(s).replace(/（占位）|\(占位\)/g,'').trim();}
+function planOf(ds){var p=null;(DATA.plans||[]).forEach(function(x){if(x.date===ds)p=x;});return p;}
+function allPlans(){return (DATA.plans||[]).slice().sort(function(a,b){return a.date<b.date?1:-1;});}
+function todayPlan(){return planOf(todayStr());}
+function tomorrowPlan(){var d=new Date();d.setDate(d.getDate()+1);return planOf(ymd(d));}
+function blocksOf(p){return (p&&p.blocks)||[];}
+function tasksOf(p){var a=[];blocksOf(p).forEach(function(b){(b.tasks||[]).forEach(function(t){a.push({b:b,t:t});});});return a;}
+function matsOf(p){var a=[];blocksOf(p).forEach(function(b){(b.materials||[]).forEach(function(m){a.push({b:b,m:m});});});return a;}
+function dayStats(ds){var tt=tasksOf(planOf(ds)),total=tt.length,done=0;tt.forEach(function(x){if(checks[x.t.id])done++;});return {total:total,done:done,pct:total?Math.round(done/total*100):0};}
+function dayFull(ds){var p=planOf(ds),tt=tasksOf(p);if(!tt.length)return null;var all=true;tt.forEach(function(x){if(!checks[x.t.id])all=false;});return all;}
+function streak(){var n=0,d=new Date();if(!dayFull(ymd(d)))d.setDate(d.getDate()-1);for(;;){var ds=ymd(d),r=dayFull(ds);if(r===null){d.setDate(d.getDate()-1);continue;}if(r){n++;d.setDate(d.getDate()-1);}else break;}return n;}
+function cumStats(){var days=0,tasks=0,matsN=0,matsRead=0,fbN=0;allPlans().forEach(function(p){if(p.date>todayStr())return;var tt=tasksOf(p),all=true;tt.forEach(function(x){if(checks[x.t.id])tasks++;else all=false;});if(tt.length&&all)days++;matsOf(p).forEach(function(x){matsN++;var s=mats[x.m.id];if(s&&s.read)matsRead++;if(s&&s.feedback)fbN++;});});return {days:days,tasks:tasks,matsN:matsN,matsRead:matsRead,fbN:fbN};}
+function firstDay(){var m=null;allPlans().forEach(function(p){if(!m||p.date<m)m=p.date;});return m;}
+function dayNo(){var f=firstDay();if(!f)return 1;var a=f.split('-'),b=todayStr().split('-');var d1=new Date(+a[0],+a[1]-1,+a[2]),d2=new Date(+b[0],+b[1]-1,+b[2]);return Math.round((d2-d1)/86400000)+1;}
+function fmtCN(ds){var p=ds.split('-'),s=parseInt(p[1],10)+'月'+parseInt(p[2],10)+'日';var t=new Date(),y=new Date(),tm=new Date();y.setDate(y.getDate()-1);tm.setDate(tm.getDate()+1);if(ds===ymd(t))s+=' · 今天';else if(ds===ymd(y))s+=' · 昨天';else if(ds===ymd(tm))s+=' · 明天';return s;}
+function matSt(id){var s=mats[id];return s&&s.read?(s&&s.feedback?'已读·有反馈':'已读'):'未读';}
+function matChip(id){var s=mats[id];var c=s&&s.read?(s&&s.feedback?'fb':'read'):'unread';var t=s&&s.read?(s&&s.feedback?'已读·有反馈':'已读'):'未读';return '<span class="lr-s st-'+c+'">'+t+'</span>';}
+function blockEn(id){var m={'read':'READ','chain':'CHAIN','news':'NEWS'};return m[id]||'BLOCK';}
+function blockIcon(id){var s='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#c2a24b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px">';if(id==='read')s+='<path d="M5 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H5z"/><path d="M19 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/>';else if(id==='chain')s+='<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>';else s+='<path d="M4 5h13v13H4z"/><path d="M17 8h3v10a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12h7M7 15h4"/>';return s+'</svg>';}
+function shortCN(ds){var p=ds.split('-');return parseInt(p[1],10)+'月'+parseInt(p[2],10)+'日';}
+function taskHtml(t,isBack){var done=!!checks[t.id];return '<div class="task'+(done?' done':'')+(isBack&&!done?' back':'')+'" onclick="toggle(\''+t.id+'\')"><div class="ck">'+(done?'✓':'')+'</div><div class="tx">'+esc(t.text)+'</div>'+(isBack&&!done?'<span class="badge">补打卡</span>':'')+'</div>';}function heroHtml(st,sk){
+  var left=st.total-st.done,cta=left>0?'去打卡 · '+left+'项待完成':'去打卡';
+  var h='<div class="hero">';
+  h+='<div class="hrow"><div class="hbrand"><div class="avatar" style="width:38px;height:38px;font-size:18px">织</div><div><div class="bname">织网</div><div class="ben">WEAVE YOUR FUTURE</div></div></div><div class="hbadge">'+shortCN(todayStr())+'</div></div>';
+  h+='<div class="gsen">DAILY LEARNING</div>';
+  h+='<h2 class="serif">今日计划</h2>';
+  h+='<div class="sub">'+(st.total?'完成今天的任务，你的网又大一圈。':'管家今晚会生成明天的计划，先休息或补补卡。')+'</div>';
+  h+='<div class="progrow"><span>今日进度</span><b>'+st.done+'/'+st.total+'</b></div>';
+  h+='<div class="prog"><i style="width:'+st.pct+'%"></i></div>';
+  h+='<div class="hstats"><b>'+st.total+'</b><span>今日任务</span><span class="sep"></span><b>'+st.done+'</b><span>已完成</span><span class="sep"></span><b>'+sk+'</b><span>连续打卡</span></div>';
+  h+='<div class="hfoot"><button class="cta" onclick="switchTab(\'check\')">'+cta+' <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle"><path d="M9 6l6 6-6 6"/></svg></button></div>';
+  h+='</div>';
+  return h;
+}
+function mstat(v,l){return '<div class="mstat"><b>'+v+'</b><span>'+l+'</span></div>';}
+function mineHero(cs,sk,dn,st){
+  var h='<div class="hero">';
+  h+='<div class="hrow"><div class="hbrand"><div class="avatar">W</div><div><div class="bname">Wade</div><div class="ben">织网第 '+dn+' 天</div></div></div><div class="hbadge">'+(sk>0?'连续 '+sk+' 天':'今日待打卡')+'</div></div>';
+  h+='<div class="gsen">PERSONAL ARCHIVE</div>';
+  h+='<h2 class="serif">我的织网</h2>';
+  h+='<div class="sub">每一份坚持，都会织进你的网里。</div>';
+  h+='<div class="mstats">'+mstat(cs.days,'完成天数')+mstat(cs.tasks,'完成任务')+mstat(cs.matsRead+'/'+cs.matsN,'已读资料')+mstat(cs.fbN,'反馈条数')+'</div>';
+  h+='<div class="hfoot"><div class="mini">今日 '+st.done+'/'+st.total+' · '+st.pct+'%</div><button class="cta" onclick="switchTab(\'check\')" style="flex:0 0 auto;padding:9px 20px;font-size:13px">去打卡</button></div>';
+  h+='</div>';
+  return h;
+}
+function greetText(){var h=new Date().getHours();return (h<6?'夜深了':h<12?'早上好':h<18?'下午好':'晚上好')+'，Wade';}
+function render(){
+  document.getElementById('tbHome').className=tab==='home'?'on':'';
+  document.getElementById('tbCheck').className=tab==='check'?'on':'';
+  document.getElementById('tbTalk').className=tab==='talk'?'on':'';
+  document.getElementById('tbMine').className=tab==='mine'?'on':'';
+  var tb=document.getElementById('tbTitle'),btn=document.getElementById('tbBtn');
+  if(tab==='talk'){tb.textContent='AI管家';btn.textContent='写需求';btn.onclick=focusMsg;}
+  else if(tab==='mine'){tb.textContent='我的';btn.textContent='⚙ 设置';btn.onclick=openSettings;}
+  else if(tab==='check'){tb.textContent='打卡记录';btn.textContent='今日小结';btn.onclick=openReview;}
+  else{tb.textContent=greetText();btn.textContent='今日小结';btn.onclick=openReview;}
+  if(tab==='home')renderHome();
+  else if(tab==='check')renderCheck();
+  else if(tab==='talk')renderTalk();
+  else renderMine();
+}
+function renderHome(){
+  var tp=todayPlan(),st=tp?dayStats(tp.date):{total:0,done:0,pct:0},sk=streak();
+  var h=heroHtml(st,sk);
+  h+='<div class="chh" style="margin:2px 2px 8px"><span class="dot"></span><span class="tt">今日任务</span><span class="en">TODAY</span></div>';
+  var today=todayStr(),html='';
+  if(tp){
+    var back={};
+    allPlans().forEach(function(p){if(p.date>=today)return;tasksOf(p).forEach(function(x){if(!checks[x.t.id])(back[x.b.id]=back[x.b.id]||[]).push({t:x.t,date:p.date});});});
+    blocksOf(tp).forEach(function(b){
+      var tt=(b.tasks||[]).slice(),bf=back[b.id]||[];
+      if(!tt.length&&!bf.length)return;
+      html+='<div class="card"><div class="chh"><span class="tt">'+blockIcon(b.id)+' '+b.name+'</span><span class="en">'+blockEn(b.id)+'</span></div><div class="btag">今日任务'+(bf.length?' · '+bf.length+' 待补':'')+'</div>';
+      tt.forEach(function(t){html+=taskHtml(t,false);});
+      bf.forEach(function(x){html+=taskHtml(x.t,true);});
+      var ml=(b.materials||[]).map(function(m){return '<div class="listrow" onclick="openMat(\''+b.id+'\',\''+m.id+'\')"><span class="lr-t">'+esc(cleanTitle(m.title))+'</span>'+matChip(m.id)+'<span class="go">›</span></div>';}).join('');
+      if(ml)html+='<div class="mats"><div style="font-size:11px;color:#8b918c;padding:8px 4px 2px">今日资料</div>'+ml+'</div>';
+      html+='</div>';
+    });
+    if(!html)html='<div class="card"><div class="empty">今天没有安排，休息或补昨天的任务。</div></div>';
+  }else{
+    html='<div class="card"><div class="empty">今天还没有计划，管家今晚会生成明天的。</div></div>';
+  }
+  h+=html;
+  var tm=tomorrowPlan();
+  if(tm){
+    var tl=tasksOf(tm).map(function(x){return '<div style="font-size:12px;color:#6b726d;padding:6px 4px;border-bottom:1px dashed #efe9da;display:flex;gap:8px;align-items:center"><span>'+blockIcon(x.b.id)+'</span><span>'+esc(x.t.text)+'</span></div>';}).join('');
+    h+='<div class="tom"><div class="chh" style="margin-bottom:2px"><span class="dot"></span><span class="tt" style="font-size:13px">明日预告</span><span class="en">TOMORROW</span></div><div class="btag" style="padding-left:16px;margin-bottom:2px">'+fmtCN(tm.date)+' · 今晚还能改</div>'+tl+'</div>';
+  }
+  h+='<div class="resbtns"><button class="g" onclick="copyFeedback()">复制反馈</button></div>';
+  document.getElementById('main').innerHTML=h;
+}
+function renderCheck(){
+  var h='<div class="search"><span class="sico"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#c2a24b" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span><input id="q" placeholder="搜任务 / 主题" value="'+esc(q)+'" oninput="onSearch(this.value)"></div><div class="hint">可组合搜索，例如 产业链 半导体 · 读书 30分钟</div>';
+  h+='<div class="card"><div class="fgroup"><div class="chips"><span class="lb">主题分类</span>';
+  var names=[];allPlans().forEach(function(p){blocksOf(p).forEach(function(b){if(names.indexOf(b.name)<0)names.push(b.name);});});
+  ['全部'].concat(names).forEach(function(bn){h+='<span class="chip'+(fBlock===bn?' on':'')+'" onclick="setF(\'block\',\''+bn+'\')">'+bn+'</span>';});
+  h+='</div></div><div class="fgroup"><div class="chips"><span class="lb">任务状态</span>';
+  ['全部','未完成','已完成'].forEach(function(s){h+='<span class="chip'+(fStatus===s?' on':'')+'" onclick="setF(\'status\',\''+s+'\')">'+s+'</span>';});
+  h+='</div></div><div class="sortrow"><span>排序</span><b>今天在前 · 按日期 ›</b></div></div>';
+  var today=todayStr(),shown=0,doneShown=0,daysHtml='';
+  allPlans().forEach(function(p){
+    if(p.date>today)return;
+    var tt=tasksOf(p).filter(function(x){
+      if(fBlock!=='全部'&&fBlock!==x.b.name)return false;
+      if(fStatus==='已完成'&&!checks[x.t.id])return false;
+      if(fStatus==='未完成'&&checks[x.t.id])return false;
+      if(q&&esc(x.t.text).indexOf(q)<0&&x.b.name.indexOf(q)<0)return false;
+      return true;
+    });
+    if(!tt.length)return;
+    var st=dayStats(p.date);
+    shown+=tt.length;
+    tt.forEach(function(x){if(checks[x.t.id])doneShown++;});
+    daysHtml+='<div class="dayhead"><h3>'+fmtCN(p.date)+'</h3><span class="dhb'+(st.total&&st.done===st.total?' dhb-ok':'')+'">'+st.done+'/'+st.total+' 完成</span></div><div class="card">'+tt.map(function(x){return taskHtml(x.t,p.date<today);}).join('')+'</div>';
+  });
+  var cond=(fBlock!=='全部'?fBlock+' · ':'')+(fStatus!=='全部'?fStatus:'');h+='<div class="reshead"><h3>任务记录</h3><span class="gold">'+(cond||'全部任务')+'</span></div>';
+  h+='<div class="rescount">共 <b>'+shown+'</b> 项，已完成 <b>'+doneShown+'</b> 项</div>';
+  h+='<div class="resbtns"><button class="g" onclick="copyFeedback()">导出反馈</button><button class="t" onclick="resetF()">重置</button></div>';
+  h+=(daysHtml||'<div class="card"><div class="empty">没有符合条件的任务</div></div>');
+  document.getElementById('main').innerHTML=h;
+}function renderMine(){
+  var st=dayStats(todayStr()),sk=streak(),cs=cumStats(),dn=dayNo();
+  var h=mineHero(cs,sk,dn,st);
+  h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">今日小结</span><span class="en">TODAY</span></div>';
+  h+='<div class="prow"><span>完成 '+st.done+'/'+st.total+'</span><b>'+st.pct+'%</b></div>';
+  h+='<div class="pbar"><i style="width:'+st.pct+'%"></i></div>';
+  var undone=tasksOf(todayPlan()).filter(function(x){return !checks[x.t.id];});
+  if(undone.length){
+    undone.forEach(function(x){h+='<div class="mini"><span class="d2"></span><span class="mtag">'+x.b.name+'</span><span class="tx">'+esc(x.t.text)+'</span></div>';});
+  }else{
+    h+='<div style="font-size:13px;color:var(--green);padding:6px 4px">全做完了，真棒！🎉</div>';
+  }
+  h+='<div class="resbtns" style="margin-bottom:0"><button class="g" onclick="copyFeedback()">复制反馈</button></div></div>';
+  var fb=[];
+  allPlans().forEach(function(p){matsOf(p).forEach(function(x){var s=mats[x.m.id];if(s&&s.feedback)fb.push('<div class="fb"><div class="fbq">'+esc(s.feedback)+'</div><div class="fbt">'+esc(cleanTitle(x.m.title))+'</div></div>');});});
+  h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">反馈记录</span><span class="en">FEEDBACK</span></div>';
+  h+=(fb.length?fb.join(''):'<div class="empty2"><div class="eico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8a6d22" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9h8M8 12h5"/></svg></div><div>读完资料写一句反馈，<br>我会据此更新明天的计划。</div><button class="eact" onclick="switchTab(\'home\')">去读今日资料</button></div>')+'</div>';
+  var ml=[],seen={};
+  allPlans().forEach(function(p){matsOf(p).forEach(function(x){if(seen[x.m.id])return;seen[x.m.id]=1;ml.push('<div class="listrow" onclick="openMat(\''+x.b.id+'\',\''+x.m.id+'\')"><span class="lr-t">'+esc(cleanTitle(x.m.title))+'</span>'+matChip(x.m.id)+'</div>');});});
+  h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">资料库</span><span class="en">ARCHIVE</span></div><div class="btag" style="padding-left:16px;margin-bottom:4px">已读 '+cs.matsRead+'/'+cs.matsN+' 篇</div>';
+  h+=(ml.length?ml.join(''):'<div class="empty2"><div class="eico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8a6d22" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H5z"/><path d="M19 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/></svg></div><div>管家会每天往这里放新资料。</div></div>')+'</div>';
+  h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">关于织网</span><span class="en">ABOUT</span></div><div style="font-size:12px;color:var(--muted);line-height:2">数据存本机 · 不上传不联网<br>无登录 · 无广告 · 无收费<br>每日计划由管家更新，每晚生成第二天<br><b style="color:var(--green)">织网 v8 · 每日计划版</b></div></div>';
+  document.getElementById('main').innerHTML=h;
+}
+
+var MS='wang_msgs';
+var msgs=[];try{var _m=JSON.parse(localStorage.getItem(MS)||'[]');if(Object.prototype.toString.call(_m)==='[object Array]')msgs=_m;}catch(e){}
+function saveMsgs(){localStorage.setItem(MS,JSON.stringify(msgs));}
+function addMsg(){
+  var t=document.getElementById('msgTxt').value.trim();
+  if(!t){alert('先写点什么再存');return;}
+  msgs.push({id:String(Date.now()),date:todayStr(),text:t});
+  saveMsgs();render();
+}
+function delMsg(id){msgs=msgs.filter(function(x){return x.id!==id;});saveMsgs();render();}
+function clearMsgs(){if(!msgs.length){alert('还没有留言');return;}if(confirm('清空全部留言？')){msgs=[];saveMsgs();render();}}
+function copyOne(id){var m=null;msgs.forEach(function(x){if(x.id===id)m=x;});if(!m)return;copyText('【织网·需求】'+fmtCN(m.date)+'\n'+m.text);}
+function copyMsgs(){
+  if(!msgs.length){alert('还没有留言，先写一条');return;}
+  var txt='【织网·需求】'+fmtCN(todayStr())+'\n';
+  msgs.forEach(function(x,i){txt+=(i+1)+'. '+x.text+'\n';});
+  var st=dayStats(todayStr());
+  txt+='\n今日完成 '+st.done+'/'+st.total+'（'+st.pct+'%）';
+  copyText(txt);
+}
+function focusMsg(){var t=document.getElementById('msgTxt');if(t){try{t.focus();}catch(e){}}}
+function copyText(txt){
+  var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');alert('已复制，粘贴到AI管家对话框发给我即可');}catch(e){alert('复制失败，请长按下面文字复制：\n\n'+txt);}
+  document.body.removeChild(ta);
+}
+function renderTalk(){
+  var h='<div class="hero">';
+  h+='<div class="hrow"><div class="hbrand"><div class="avatar" style="width:38px;height:38px;font-size:18px">聊</div><div><div class="bname">和AI管家对话</div><div class="ben">TALK TO YOUR AI STEWARD</div></div></div><div class="hbadge">'+(msgs.length?msgs.length+' 条留言':'给AI管家留言')+'</div></div>';
+  h+='<div class="gsen">DAILY FEEDBACK LOOP</div>';
+  h+='<h2 class="serif">说说你的需求</h2>';
+  h+='<div class="sub">把需求、变更直接写下来发给AI管家，我更新你的每日计划。</div>';
+  h+='</div>';
+  var rp=DATA.reply;
+  h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">AI管家回复</span><span class="en">REPLY</span></div>';
+  h+=(rp&&rp.text?'<div class="fb"><div class="fbq">'+esc(rp.text)+'</div><div class="fbt">'+(rp.date?fmtCN(rp.date):'')+'</div></div>':'<div class="empty2"><div class="eico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8a6d22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></div><div>还没有回复。发一条留言给AI管家，我更新后会回在这里。</div></div>')+'</div>';
+  h+='<div class="card focus"><div class="chh"><span class="dot"></span><span class="tt">写需求</span><span class="en">NEW NOTE</span></div>';
+  h+='<textarea id="msgTxt" class="msgbox" placeholder="例：加一项健身，周二/周六/周日练胸肩背"></textarea>';
+  h+='<button class="btn" onclick="addMsg()">存进留言</button>';
+  h+='<div class="hint">存好后点下方「复制发给AI管家」，粘贴到AI管家对话框发给我；我更新计划后把回复贴回上面。</div>';
+  h+='</div>';
+  h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">我的留言</span><span class="en">MY NOTES</span></div>';
+  if(msgs.length){
+    var ml=msgs.slice().reverse().map(function(x){return '<div class="msg"><div class="mt">'+fmtCN(x.date)+'</div><div class="mx">'+esc(x.text)+'</div><div class="mb"><button onclick="copyOne(\''+x.id+'\')">复制</button><button class="del" onclick="delMsg(\''+x.id+'\')">删除</button></div></div>';}).join('');
+    h+=ml;
+    h+='<div class="resbtns"><button class="g" onclick="copyMsgs()">复制发给AI管家</button></div>';
+    h+='<div style="text-align:right;padding:0 4px 2px"><button class="ghost" onclick="clearMsgs()">清空留言</button></div>';
+  }else{
+    h+='<div class="empty2"><div class="eico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8a6d22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9h8M8 12h5"/></svg></div><div>还没有留言。想加需求、改计划，写一条吧。</div></div>';
+    h+='<div class="hint" style="text-align:center">写一条需求存好，它会出现在这里，再一键复制发给AI管家。</div>';
+  }
+  h+='</div>';
+  document.getElementById('main').innerHTML=h;
+}
+function switchTab(t){tab=t;render();}
+function onSearch(v){q=v.trim();render();}
+function resetF(){q='';fBlock='全部';fStatus='全部';render();}
+function setF(k,v){if(k==='block')fBlock=v;else fStatus=v;render();}
+function toggle(id){
+  if(checks[id]){delete checks[id];}else{checks[id]=todayStr();}
+  saveChecks();render();
+}
+function openMat(bid,mid){
+  var m=null;
+  allPlans().forEach(function(x){matsOf(x).forEach(function(y){if(y.m.id===mid)m=y.m;});});
+  if(!m)return;
+  curMat=mid;
+  document.getElementById('mTitle').textContent=cleanTitle(m.title);
+  document.getElementById('mBody').textContent=m.body;
+  document.getElementById('mLink').href=m.link||'#';
+  document.getElementById('mFb').value=(mats[mid]&&mats[mid].feedback)||'';
+  showModal('modal');
+  if(!mats[mid]||!mats[mid].read){mats[mid]=mats[mid]||{};mats[mid].read=true;saveMats();render();}
+}
+function saveFb(){
+  if(!curMat)return;
+  var fb=document.getElementById('mFb').value.trim();
+  mats[curMat]=mats[curMat]||{};mats[curMat].feedback=fb;saveMats();
+  closeModal();render();
+  alert(fb?'反馈已保存，管家更新明天计划时会参考':'反馈已清空');
+}
+function openReview(){
+  var ds=todayStr(),st=dayStats(ds),undone=tasksOf(todayPlan()).filter(function(x){return !checks[x.t.id];});
+  var fb=[];
+  allPlans().forEach(function(p){matsOf(p).forEach(function(x){var s=mats[x.m.id];if(s&&s.feedback)fb.push('【'+cleanTitle(x.m.title)+'】'+s.feedback);});});
+  var html='<div style="font-size:18px;font-weight:600;color:var(--green);margin-bottom:4px" class="serif">今日完成 '+st.done+'/'+st.total+'</div>';
+  html+='<div style="font-size:13px;color:var(--muted);margin-bottom:10px">完成度 '+st.pct+'% · 连续打卡 '+streak()+' 天</div>';
+  html+='<div style="font-size:14px;font-weight:600;margin-bottom:4px">还没做的</div>';
+  html+='<div style="font-size:13px;color:var(--muted);margin-bottom:10px">'+(undone.length?undone.map(function(x){return esc(x.b.name+' '+x.t.text);}).join('<br>'):'全做完了，真棒！')+'</div>';
+  html+='<div style="font-size:14px;font-weight:600;margin-bottom:4px">你的反馈</div>';
+  html+='<div style="font-size:13px;color:var(--muted)">'+(fb.length?fb.join('<br><br>'):'还没有反馈')+'</div>';
+  document.getElementById('revBody').innerHTML=html;
+  showModal('revModal');
+}
+function openSettings(){showModal('setModal');}
+function copyFeedback(){
+  var ds=todayStr(),st=dayStats(ds),undone=tasksOf(todayPlan()).filter(function(x){return !checks[x.t.id];});
+  var fb=[];
+  allPlans().forEach(function(p){matsOf(p).forEach(function(x){var s=mats[x.m.id];if(s&&s.feedback)fb.push('【'+cleanTitle(x.m.title)+'】'+s.feedback);});});
+  var txt='织网 反馈 · '+fmtCN(ds)+'\n';
+  txt+='今日完成 '+st.done+'/'+st.total+'（'+st.pct+'%）\n';
+  txt+='未完成：'+(undone.length?undone.map(function(x){return x.b.name+' '+x.t.text;}).join('、'):'无')+'\n';
+  txt+='资料反馈：\n'+(fb.length?fb.join('\n'):'（无）');
+  var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');alert('已复制，粘贴发给AI管家即可');}catch(e){alert('复制失败，请长按下面文字复制：\n\n'+txt);}
+  document.body.removeChild(ta);
+}
+function showModal(id){document.getElementById(id).style.display='block';document.getElementById('mask').style.display='block';}
+function closeModal(){document.querySelectorAll('.modal').forEach(function(m){m.style.display='none';});document.getElementById('mask').style.display='none';}
+render();
+fetch('materials.json').then(function(r){return r.json();}).then(function(d){if(!d||!d.plans)return;DATA=d;render();}).catch(function(){});
+</script>
+</body>
+</html>
