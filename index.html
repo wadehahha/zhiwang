@@ -219,6 +219,7 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function cleanTitle(s){return String(s).replace(/（占位）|\(占位\)/g,'').trim();}
 function planOf(ds){var p=null;(DATA.plans||[]).forEach(function(x){if(x.date===ds)p=x;});return p;}
 function allPlans(){return (DATA.plans||[]).slice().sort(function(a,b){return a.date<b.date?1:-1;});}
+function archivePlans(){var ps=allPlans().slice().sort(function(a,b){return a.date<b.date?-1:1;});var t=todayStr();var ft=ps.filter(function(p){return p.date>=t;});if(ft.length)return ft.slice(0,7);return ps.slice(Math.max(0,ps.length-7));}
 function todayPlan(){return planOf(todayStr());}
 function tomorrowPlan(){var d=new Date();d.setDate(d.getDate()+1);return planOf(ymd(d));}
 function blocksOf(p){return (p&&p.blocks)||[];}
@@ -355,9 +356,9 @@ function renderCheck(){
   allPlans().forEach(function(p){matsOf(p).forEach(function(x){var s=mats[x.m.id];if(s&&s.feedback)fb.push('<div class="fb"><div class="fbq">'+esc(s.feedback)+'</div><div class="fbt">'+esc(cleanTitle(x.m.title))+'</div></div>');});});
   h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">反馈记录</span><span class="en">FEEDBACK</span></div>';
   h+=(fb.length?fb.join(''):'<div class="empty2"><div class="eico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8a6d22" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9h8M8 12h5"/></svg></div><div>读完资料写一句反馈，<br>我会据此更新明天的计划。</div><button class="eact" onclick="switchTab(\'home\')">去读今日资料</button></div>')+'</div>';
-  var ml=[],seen={};
-  allPlans().forEach(function(p){matsOf(p).forEach(function(x){if(seen[x.m.id])return;seen[x.m.id]=1;ml.push('<div class="listrow" onclick="openMat(\''+x.b.id+'\',\''+x.m.id+'\')"><span class="lr-t">'+esc(cleanTitle(x.m.title))+'</span>'+matChip(x.m.id)+'</div>');});});
-  h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">资料库</span><span class="en">ARCHIVE</span></div><div class="btag" style="padding-left:16px;margin-bottom:4px">已读 '+cs.matsRead+'/'+cs.matsN+' 篇</div>';
+  var ap=archivePlans(),ml=[],seen={},winN=0,winRead=0;
+  ap.forEach(function(p){matsOf(p).forEach(function(x){winN++;var s=mats[x.m.id];if(s&&s.read)winRead++;if(seen[x.m.id])return;seen[x.m.id]=1;ml.push('<div class="listrow" onclick="openMat(\''+x.b.id+'\',\''+x.m.id+'\')"><span class="lr-t">'+esc(cleanTitle(x.m.title))+'</span>'+matChip(x.m.id)+'</div>');});});
+  h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">资料库</span><span class="en">ARCHIVE</span></div><div class="btag" style="padding-left:16px;margin-bottom:4px">近7天 · 已读 '+winRead+'/'+winN+' 篇</div>';
   h+=(ml.length?ml.join(''):'<div class="empty2"><div class="eico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8a6d22" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H5z"/><path d="M19 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/></svg></div><div>管家会每天往这里放新资料。</div></div>')+'</div>';
   h+='<div class="card"><div class="chh"><span class="dot"></span><span class="tt">关于织网</span><span class="en">ABOUT</span></div><div style="font-size:12px;color:var(--muted);line-height:2">数据存本机 · 不上传不联网<br>无登录 · 无广告 · 无收费<br>每日计划由管家更新，每晚生成第二天<br><b style="color:var(--green)">织网 v8 · 每日计划版</b></div></div>';
   document.getElementById('main').innerHTML=h;
